@@ -1,0 +1,27 @@
+.ledger-player {
+    display: flex;
+    margin-left: 40px;
+    margin-bottom: 10px;
+  }
+  .P1_shape {
+    height: 20px;
+    width: 20px;
+    background-color: #555;
+  }
+  .P2_shape {
+    height: 20px;
+    width: 20px;
+    background-color: #555;
+    border-radius: 50%;
+  }
+  .P3_shape {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #555;
+  }
+  .P4_shape {
+    border-bottom: 15px solid #555;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
