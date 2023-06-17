@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Snake from "../../Assets/snake.png";
+import Ladder from "../../Assets/ladder.png";
 
 const GameConfig = () => {
   const [boardRows, setBoardRows] = useState(10);
@@ -75,7 +77,10 @@ const GameConfig = () => {
         </div>
         <div className="mb-3">
           <label className="form-label">Snake and Ladder:</label>
-          <p>Each snake and ladder has a starting point and an ending point. Interestingly, the starting point of a snake is always greater than its ending point. For Ladders, the starting point of a ladder is always less than its ending point.</p>
+          <p>For Snake: Start Position {'>'} End Position <img src={Snake} alt="" style={{ marginLeft:10, width: '60px', height: '70px' }}/> </p>
+          <p>For Ladder: Start Position {'<'} End Position <img src={Ladder} alt="" style={{ marginLeft:10, width: '55px', height: '55px' }}/> </p>
+          
+
           {snakeOrLadder.map((position, index) => (
             <div key={index} className="d-flex">
               <input
