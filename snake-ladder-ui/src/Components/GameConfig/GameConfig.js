@@ -35,11 +35,6 @@ const GameConfig = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Perform any necessary validation or processing of the input values
-    // You can access the state variables here and use them as needed
-
-    // Example: Log the input values
     console.log("Board Rows:", boardRows);
     console.log("Board Columns:", boardColumns);
     console.log("Dice Count:", diceCount);
@@ -92,7 +87,7 @@ const GameConfig = () => {
             onChange={(event) => setPlayerCount(parseInt(event.target.value))}
           />
         </div>
-        
+
         <div className="mb-3">
           <label className="form-label">Snake :</label>
           {snake.map((position, index) => (
