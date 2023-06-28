@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Snake from "../../Assets/snake.png";
 import Ladder from "../../Assets/ladder.png";
@@ -29,6 +30,29 @@ const GameConfig = () => {
     console.log("Dice Count:", diceCount);
     console.log("Player Count:", playerCount);
     console.log("Snake or Ladder:", snakeOrLadder);
+
+    const data = {
+      boardRows: boardRows,
+      boardColumns: boardColumns,
+      diceCount: diceCount,
+      playerCount: playerCount,
+      gameState: "JOIN",
+      snakeOrLadder: {}
+    };
+
+    snakeOrLadder.forEach((position, index) => {
+      data.snakeOrLadder[position.start] = position.end;
+    });
+
+    axios.post('http://localhost:8080/configure/game', data)
+      .then(response => {
+        console.log('Data successfully sent:', response.data);
+        
+      })
+      .catch(error => {
+        console.error('Error sending data:', error);
+      
+      });
   };
 
   return (
@@ -79,7 +103,6 @@ const GameConfig = () => {
           <label className="form-label">Snake and Ladder:</label>
           <p>For Snake: Start Position {'>'} End Position <img src={Snake} alt="" style={{ marginLeft:10, width: '60px', height: '70px' }}/> </p>
           <p>For Ladder: Start Position {'<'} End Position <img src={Ladder} alt="" style={{ marginLeft:10, width: '55px', height: '55px' }}/> </p>
-          
 
           {snakeOrLadder.map((position, index) => (
             <div key={index} className="d-flex">
@@ -103,7 +126,7 @@ const GameConfig = () => {
             Add
           </button>
         </div>
-        <button type="submit" className="btn btn-primary">Start Game</button>
+        <button type="submit" className="btn btn-primary">Create Game</button>
       </form>
     </div>
   );
