@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import baseURL from '../../config';
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -18,7 +19,7 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8080/player/register', userData)
+    axios.post(`${baseURL}/player/register`, userData)
       .then((response) => {
         console.log(response.data);
       })
