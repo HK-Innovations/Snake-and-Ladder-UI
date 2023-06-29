@@ -7,7 +7,7 @@ import Signup from './Components/Signup/Signup'
 export default function App() {
   return (
     <div>
-      <GameConfig/>
+      <Signup/>
     </div>
   )
 }
