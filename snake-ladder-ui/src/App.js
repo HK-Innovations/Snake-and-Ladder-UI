@@ -5,7 +5,6 @@ import Signup from './Components/Signup/Signup'
 import Login from './Components/Login/Login'
 import Template from './Components/Template/Template'
 
-
 export default function App() {
   return (
     <div>
