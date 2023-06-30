@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import baseURL from '../../config';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
+  const [userData, setUserData] = useState({
     name: '',
-    emailid: '',
+    emailId: '',
     password: ''
   });
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`${baseURL}/player/register`, userData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -27,21 +39,19 @@ const Signup = () => {
             className="form-control"
             id="name"
             name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
+            value={userData.name}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="emailid" className="form-label">Email ID</label>
+          <label htmlFor="emailId" className="form-label">Email</label>
           <input
             type="email"
             className="form-control"
-            id="emailid"
-            name="emailid"
-            value={formData.emailid}
-            onChange={handleInputChange}
-            required
+            id="emailId"
+            name="emailId"
+            value={userData.emailId}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -51,12 +61,11 @@ const Signup = () => {
             className="form-control"
             id="password"
             name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
+            value={userData.password}
+            onChange={handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Sign Up</button>
       </form>
     </div>
   );
