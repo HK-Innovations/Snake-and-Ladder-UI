@@ -9,7 +9,7 @@ import Template from './Components/Template/Template'
 export default function App() {
   return (
     <div>
-      <Template/>
+      <Signup/>
     </div>
   )
 }
