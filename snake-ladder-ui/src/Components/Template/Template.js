@@ -5,7 +5,7 @@ export default function Template() {
     
     <div className='mt-4 ml-4'>
        <button className="btn btn-primary mr-2">Default Template</button>
-  <button className="btn btn-secondary mr-4">Own Template</button>
+  <button className="btn btn-secondary mr-4" onClick={()=>{window.location.replace(`${window.location.origin}/game-config`)} }>Own Template</button>
     </div>
   )
 }

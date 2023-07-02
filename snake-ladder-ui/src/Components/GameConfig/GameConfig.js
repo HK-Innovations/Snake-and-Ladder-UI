@@ -126,7 +126,7 @@ const GameConfig = () => {
             Add
           </button>
         </div>
-        <button type="submit" className="btn btn-primary">Create Game</button>
+        <button type="submit" className="btn btn-primary" onClick={()=>{window.location.replace(`${window.location.origin}/board`)} }  >Create Game</button>
       </form>
     </div>
   );
