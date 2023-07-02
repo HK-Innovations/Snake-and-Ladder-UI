@@ -12,7 +12,6 @@ import {
   Routes,
 } from "react-router-dom";
 
-
 export default function App() {
   return (
     <BrowserRouter>
@@ -24,26 +23,5 @@ export default function App() {
       <Route path="/board" element={<Board />} />
     </Routes>
   </BrowserRouter>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" component={Login} />
-    //     <Route path="/signup" component={Signup} />
-    //     <Route path="/template" component={Template} />
-    //     <Route path="/game-config" component={GameConfig} />
-    //     <Route path="/board" component={Board} />
-    //   </Routes>
-    // </Router>
-
-
-
-// <Routes>
-// <Route path="/" element={<Login />} />
-// <Route path="/signup" element={<Signup />} />
-// <Route path="/template" element={<Template />} />
-// <Route path="/game-config" element={<GameConfig />} />
-// <Route path="/board" element={<Board />} />
-
-// </Routes>
-
   );
 }
