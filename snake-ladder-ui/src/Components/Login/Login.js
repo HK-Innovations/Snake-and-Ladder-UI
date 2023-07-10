@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import baseURL from "../../config";
 import cookie from "react-cookies";
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import img1 from "../../Assets/PicturesSlider/dice1.jpg";
 import img2 from "../../Assets/PicturesSlider/dice2.jpg";
@@ -19,9 +19,19 @@ import img11 from "../../Assets/PicturesSlider/p6.jpg";
 
 const Login = () => {
   const images = [
-    img1,img2,img3,img4,img5,img6, img7, img8, img9, img10, img11
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
   ];
- 
+
   const [userData, setUserData] = useState({
     emailId: "",
     password: "",
@@ -62,71 +72,86 @@ const Login = () => {
     axios
       .post(`${baseURL}/player/login`, userData)
       .then((response) => {
-        cookie.save("access_token", response.data.accessToken);
-        if (response.status === 200) {
+        // console.log(response);
+
+        if (response.status == 200) {
+          cookie.save("access_token", response.data.accessToken);
+          // console.log(response.data);
           window.location.replace(`${window.location.origin}/template`);
-          console.log(response.data);
         }
       })
       .catch((error) => {
-        console.error(error);
+        alert(error.response.data.reason);
+        // console.error("Error:",error);
       });
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ flex: '0 0 50%', backgroundColor: '#eee' , justifyContent:'center',alignContent:'center', padding:'180px',}}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="emailId" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className={`form-control ${emailError ? "is-invalid" : ""}`}
-            id="emailId"
-            name="emailId"
-            value={userData.emailId}
-            onChange={handleChange}
-          />
-          {emailError && <div className="invalid-feedback">{emailError}</div>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className={`form-control ${passwordError ? "is-invalid" : ""}`}
-            id="password"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-          />
-          {passwordError && (
-            <div className="invalid-feedback">{passwordError}</div>
-          )}
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Login
-        </button>
-      </form>
-      <button
-        type="submit"
-        className="mt-5 btn btn-secondary"
-        onClick={() => {
-          window.location.replace(`${window.location.origin}/Signup`);
+    <div style={{ display: "flex", height: "100vh" }}>
+      <div
+        style={{
+          flex: "0 0 50%",
+          backgroundColor: "#eee",
+          justifyContent: "center",
+          alignContent: "center",
+          padding: "180px",
         }}
       >
-        Didn't have an account ? Signup
-      </button>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="emailId" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className={`form-control ${emailError ? "is-invalid" : ""}`}
+              id="emailId"
+              name="emailId"
+              value={userData.emailId}
+              onChange={handleChange}
+            />
+            {emailError && <div className="invalid-feedback">{emailError}</div>}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className={`form-control ${passwordError ? "is-invalid" : ""}`}
+              id="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+            />
+            {passwordError && (
+              <div className="invalid-feedback">{passwordError}</div>
+            )}
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Login
+          </button>
+        </form>
+        <button
+          type="submit"
+          className="mt-5 btn btn-secondary"
+          onClick={() => {
+            window.location.replace(`${window.location.origin}/Signup`);
+          }}
+        >
+          Didn't have an account ? Signup
+        </button>
       </div>
-      <div style={{ flex: '0 0 50%' }}>
+      <div style={{ flex: "0 0 50%" }}>
         <Carousel showThumbs={false} infiniteLoop autoPlay>
           {images.map((image, index) => (
-            <div key={index} style={{ height: '100vh' }}>
-              <img src={image} alt={`Slider Image ${index}`} style={{ objectFit: 'cover', height: '100%', width: '100%' }} />
+            <div key={index} style={{ height: "100vh" }}>
+              <img
+                src={image}
+                alt={`Slider Image ${index}`}
+                style={{ objectFit: "cover", height: "100%", width: "100%" }}
+              />
             </div>
           ))}
         </Carousel>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import baseURL from "../../config";
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import img1 from "../../Assets/PicturesSlider/dice1.jpg";
 import img2 from "../../Assets/PicturesSlider/dice2.jpg";
@@ -17,7 +17,17 @@ import img10 from "../../Assets/PicturesSlider/p5.jpg";
 import img11 from "../../Assets/PicturesSlider/p6.jpg";
 const Signup = () => {
   const images = [
-    img1,img2,img3,img4,img5,img6, img7, img8, img9, img10, img11
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
   ];
   const [userData, setUserData] = useState({
     name: "",
@@ -78,73 +88,95 @@ const Signup = () => {
       .then((response) => {
         if (response.status === 200) {
           window.location.replace(`${window.location.origin}/`);
+          // console.log(response.data);
         }
-        console.log(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        alert("You already have an account, please login");
+        // console.error(error);
       });
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ flex: '0 0 50%', backgroundColor: '#eee' , justifyContent:'center',alignContent:'center', padding:'380px',}}>
-      <h1 className="mt-5 d-flex justify-content-center">Signup</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            className={`form-control ${nameError ? "is-invalid" : ""}`}
-            id="name"
-            name="name"
-            value={userData.name}
-            onChange={handleChange}
-          />
-          {nameError && <div className="invalid-feedback">{nameError}</div>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="emailId" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className={`form-control ${emailError ? "is-invalid" : ""}`}
-            id="emailId"
-            name="emailId"
-            value={userData.emailId}
-            onChange={handleChange}
-          />
-          {emailError && <div className="invalid-feedback">{emailError}</div>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className={`form-control ${passwordError ? "is-invalid" : ""}`}
-            id="password"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-          />
-          {passwordError && (
-            <div className="invalid-feedback">{passwordError}</div>
-          )}
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Sign Up
+    <div style={{ display: "flex", height: "100vh" }}>
+      <div
+        style={{
+          flex: "0 0 50%",
+          backgroundColor: "#eee",
+          justifyContent: "center",
+          alignContent: "center",
+          padding: "280px",
+        }}
+      >
+        <h1 className="mt-5 d-flex justify-content-center">Signup</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className={`form-control ${nameError ? "is-invalid" : ""}`}
+              id="name"
+              name="name"
+              value={userData.name}
+              onChange={handleChange}
+            />
+            {nameError && <div className="invalid-feedback">{nameError}</div>}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="emailId" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className={`form-control ${emailError ? "is-invalid" : ""}`}
+              id="emailId"
+              name="emailId"
+              value={userData.emailId}
+              onChange={handleChange}
+            />
+            {emailError && <div className="invalid-feedback">{emailError}</div>}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className={`form-control ${passwordError ? "is-invalid" : ""}`}
+              id="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+            />
+            {passwordError && (
+              <div className="invalid-feedback">{passwordError}</div>
+            )}
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Sign Up
+          </button>
+        </form>
+        <button
+          type="submit"
+          className="mt-5 btn btn-secondary"
+          onClick={() => {
+            window.location.replace(`${window.location.origin}/`);
+          }}
+        >
+          Already have an account !! Login
         </button>
-      </form>
       </div>
-      <div style={{ flex: '0 0 50%' }}>
+      <div style={{ flex: "0 0 50%" }}>
         <Carousel showThumbs={false} infiniteLoop autoPlay>
           {images.map((image, index) => (
-            <div key={index} style={{ height: '100vh' }}>
-              <img src={image} alt={`Slider Image ${index}`} style={{ objectFit: 'cover', height: '100%', width: '100%' }} />
+            <div key={index} style={{ height: "100vh" }}>
+              <img
+                src={image}
+                alt={`Slider Image ${index}`}
+                style={{ objectFit: "cover", height: "100%", width: "100%" }}
+              />
             </div>
           ))}
         </Carousel>
