@@ -88,12 +88,10 @@ const Signup = () => {
       .then((response) => {
         if (response.status === 200) {
           window.location.replace(`${window.location.origin}/`);
-          // console.log(response.data);
         }
       })
       .catch((error) => {
         alert("You already have an account, please login");
-        // console.error(error);
       });
   };
 

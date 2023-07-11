@@ -1,3 +1,3 @@
-const baseURL = 'http://localhost:8080'; // Replace with your desired IP address
+const baseURL = 'http://localhost:8080'; 
 
 export default baseURL;

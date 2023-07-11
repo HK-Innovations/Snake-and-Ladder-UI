@@ -18,6 +18,50 @@ import img10 from "../../Assets/PicturesSlider/p5.jpg";
 import img11 from "../../Assets/PicturesSlider/p6.jpg";
 
 const Login = () => {
+  const decodeAccessToken = (accessToken) => {
+    // Split the JWT into its three parts
+    const parts = accessToken.split(".");
+    if (parts.length !== 3) {
+      console.error("Invalid JWT format");
+      return;
+    }
+
+    // Extract the payload (second part)
+    const encodedPayload = parts[1];
+
+    // Decode the base64-encoded payload
+    let decodedPayload;
+    try {
+      decodedPayload = atob(encodedPayload);
+    } catch (error) {
+      console.error("Error decoding JWT payload:", error);
+      return;
+    }
+
+    // Parse the decoded payload as JSON
+    let payloadData;
+    try {
+      payloadData = JSON.parse(decodedPayload);
+    } catch (error) {
+      console.error("Error parsing JWT payload JSON:", error);
+      return;
+    }
+
+    // Access the desired data from the payload
+    const { name, emailId, exp, iat } = payloadData;
+
+    // Store the data in local storage or perform any other actions
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", emailId);
+    localStorage.setItem("expirationTime", new Date(exp * 1000).toString());
+    localStorage.setItem("creationTime", new Date(iat * 1000).toString());
+
+    // console.log("Name:", name);
+    // console.log("Email:", emailId);
+    // console.log("Expiration Time:", new Date(exp * 1000));
+    // console.log("Creation Time:", new Date(iat * 1000));
+  };
+
   const images = [
     img1,
     img2,
@@ -72,17 +116,15 @@ const Login = () => {
     axios
       .post(`${baseURL}/player/login`, userData)
       .then((response) => {
-        // console.log(response);
-
         if (response.status == 200) {
           cookie.save("access_token", response.data.accessToken);
-          // console.log(response.data);
+          const accessToken = response.data.accessToken;
+          decodeAccessToken(accessToken);
           window.location.replace(`${window.location.origin}/template`);
         }
       })
       .catch((error) => {
         alert(error.response.data.reason);
-        // console.error("Error:",error);
       });
   };
 

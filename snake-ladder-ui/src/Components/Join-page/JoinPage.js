@@ -10,8 +10,8 @@ const JoinPage = () => {
   const [playerBoxes, setPlayerBoxes] = useState(
     parsedData?.board?.playerBoxes || []
   );
-
-  console.log(playerBoxes);
+  const email = parsedData?.config?.email;
+  const isGameCreator = email === parsedData?.config?.email;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,6 @@ const JoinPage = () => {
         const response = await axios.get(
           `${baseURL}/configure/getGame?gameId=${gameId}`
         );
-        console.log(response.data);
         setPlayerBoxes(response.data.board.playerBoxes || []);
       } catch (error) {
         console.error(error);
@@ -45,23 +44,23 @@ const JoinPage = () => {
       .then((response) => {
         if (response.status === 200) {
           console.log("Response:", response.data);
-          alert("All the best !! Game started");
+          alert("All the best! The game has started.");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
-
+  // console.log("ans=",isGameCreator);
   return (
     <div>
       <h1>Join Page</h1>
-      <h3>GameId ... Share with your friends</h3>
+      <h3>Game ID - Share with your friends</h3>
       <CopyButton text={gameId} />
       <div>
         <h1>Player List</h1>
         {playerBoxes.length === 0 ? (
-          <p>No players joined yet</p>
+          <p>No players have joined yet.</p>
         ) : (
           <ul>
             {playerBoxes.map((playerBox) => (
@@ -70,9 +69,11 @@ const JoinPage = () => {
           </ul>
         )}
       </div>
-      <button className="btn btn-secondary mr-4" onClick={handleStartGame}>
-        Start Game
-      </button>
+      {isGameCreator && (
+        <button className="btn btn-secondary mr-4" onClick={handleStartGame}>
+          Start Game
+        </button>
+      )}
     </div>
   );
 };

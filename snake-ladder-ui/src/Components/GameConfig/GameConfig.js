@@ -5,7 +5,11 @@ import Snake from "../../Assets/snake.png";
 import Ladder from "../../Assets/ladder.png";
 import baseURL from "../../config";
 
+
 const GameConfig = () => {
+
+  const email = localStorage.getItem('email');
+ 
   const [boardRows, setBoardRows] = useState(10);
   const [boardColumns, setBoardColumns] = useState(10);
   const [diceCount, setDiceCount] = useState(3);
@@ -29,13 +33,14 @@ const GameConfig = () => {
     console.log("Dice Count:", diceCount);
     console.log("Player Count:", playerCount);
     console.log("Snake or Ladder:", snakeOrLadder);
-
+   
     const data = {
       boardRows: boardRows,
       boardColumns: boardColumns,
       diceCount: diceCount,
       playerCount: playerCount,
       gameState: "JOIN",
+      emailId: email,
       snakeOrLadder: {},
     };
 
