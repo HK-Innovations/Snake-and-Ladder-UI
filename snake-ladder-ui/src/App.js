@@ -13,13 +13,14 @@ import {
 } from "react-router-dom";
 import JoinPage from "./Components/Join-page/JoinPage";
 import JoinGameId from "./Components/Join-gameID/JoinGameId.js";
+import FireWorks from "./Components/FireWorks";
 
 export default function App() {
   return (
     <BrowserRouter>
     <Routes>
-    {/* <Route path="/" element={<Board />} /> */}
-      <Route path="/" element={<Login />} />
+    <Route path="/" element={<FireWorks />} />
+      {/* <Route path="/" element={<Login />} /> */}
       <Route path="/signup" element={<Signup />} />
       <Route path="/template" element={<Template />} />
       <Route path="/game-config" element={<GameConfig />} />
