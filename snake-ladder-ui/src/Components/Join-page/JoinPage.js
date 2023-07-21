@@ -45,6 +45,7 @@ const JoinPage = () => {
         if (response.status === 200) {
           console.log("Response:", response.data);
           alert("All the best! The game has started.");
+          window.location.replace(`${window.location.origin}/board`);
         }
       })
       .catch((error) => {

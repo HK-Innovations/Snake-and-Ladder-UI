@@ -19,8 +19,8 @@ export default function App() {
   return (
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<FireWorks />} />
-      {/* <Route path="/" element={<Login />} /> */}
+    {/* <Route path="/" element={<Board rows={10} columns={10}/>} /> */}
+      <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/template" element={<Template />} />
       <Route path="/game-config" element={<GameConfig />} />

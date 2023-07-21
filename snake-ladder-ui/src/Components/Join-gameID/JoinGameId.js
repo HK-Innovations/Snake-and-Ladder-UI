@@ -18,11 +18,17 @@ const JoinGameId = () => {
         emailId: email,
         gameId: gameId,
       });
-      console.log(response);
-      window.location.replace(`${window.location.origin}/join`);
+      // console.log("Response->",response);
+      // console.log("STATUS", response.status);
+     
     } catch (error) {
-      alert("You already added !!");
-      console.error(error);
+      console.log("Error",error);
+      if(error.response.status == 429) {
+        alert("Max player reached");
+      } 
+      else {
+        alert("You already added !!");
+      }
     }
   };
 
