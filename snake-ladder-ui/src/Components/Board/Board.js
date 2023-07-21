@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
-import './Board.css'; // CSS file for styling
-import Dice from './Dice';
+import React, { useRef, useState } from "react";
+import ReactDice from "react-dice-complete";
+import axios from "axios";
+import "./Board.css";
+import baseURL from "../../config";
 
 const Board = () => {
+  //dice
+  const diceRef = useRef();
+  const [diceValues, setDiceValues] = useState([]);
+
+  const storedData = localStorage.getItem("gameData");
+  const parsedData = JSON.parse(storedData);
+  // console.log(parsedData);
+  const gameId = parsedData?.id;
+  const emailId = parsedData?.emailId;
+
+  const handleRoll = () => {
+    diceRef.current.rollAll();
+  };
+
+  const handleDiceRoll = (values) => {
+    setDiceValues(values);
+
+    // const apiUrl = `${baseURL}/player/movePlayer`; //change
+
+    // try {
+    //   const response = axios.post(apiUrl, {
+    //     gameId: gameId,
+    //     diceValue: diceValues,
+    //     currentPlayer: emailId,
+    //   });
+    //   console.log("Dice Roll Response:", response.data);
+    // } catch (error) {
+    //   console.error("Error making POST request:", error);
+    // }
+  };
+
   const totalRows = 10;
   const totalColumns = 10;
-  const totalCells = totalRows * totalColumns;
 
   const [playerPosition, setPlayerPosition] = useState(1); // Initial player position
-  const [diceSum, setDiceSum] = useState(0); // Initial sum of dice values
-
-  const rollDice = (num) => {
-    const diceValue = Math.floor(Math.random() * num) + 1; // Generate a random dice value between 1 and num
-    setPlayerPosition((prevPosition) => prevPosition + diceValue);
-    setDiceSum((prevSum) => prevSum + diceValue);
-  };
 
   // Render the board cells
   const renderBoardCells = () => {
@@ -27,7 +52,7 @@ const Board = () => {
         const cell = (
           <div
             key={cellCount}
-            className={`cell ${playerPosition === cellCount ? 'player' : ''}`}
+            className={`cell ${playerPosition === cellCount ? "player" : ""}`}
           >
             {cellCount}
           </div>
@@ -43,7 +68,21 @@ const Board = () => {
   return (
     <div>
       <div className="board">{renderBoardCells()}</div>
-      <Dice rollDice={rollDice} />
+
+      <div>
+        <ReactDice
+          numDice={2}
+          rollTime={1}
+          disableIndividual
+          ref={diceRef}
+          faceColor="radial-gradient(rgb(255, 60, 60), rgb(180, 0, 0))"
+          dotColor="#fff"
+          dieSize={40}
+          rollDone={handleDiceRoll}
+        />
+        <button onClick={handleRoll}>Rotate</button>
+        <div> Sum : {diceValues} </div>
+      </div>
     </div>
   );
 };

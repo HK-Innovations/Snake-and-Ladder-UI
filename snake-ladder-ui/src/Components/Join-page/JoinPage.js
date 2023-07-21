@@ -35,24 +35,20 @@ const JoinPage = () => {
   }, [gameId]);
 
   const handleStartGame = () => {
-    const params = {
-      gameId: gameId,
-    };
+    const postData = { gameId: gameId };
 
-    axios
-      .post(`${baseURL}/configure/startGame?gameId=${gameId}`, null, { params })
+    axios.post(`${baseURL}/configure/startGame?gameId=${gameId}`, postData)
       .then((response) => {
-        if (response.status === 200) {
-          console.log("Response:", response.data);
-          alert("All the best! The game has started.");
-          window.location.replace(`${window.location.origin}/board`);
-        }
+        console.log('Response:', response.data);
+        alert("All the best! The game has started.");
+        window.location.replace(`${window.location.origin}/board`);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        alert("You already joined");
+        console.error('Error:', error);
       });
   };
-  // console.log("ans=",isGameCreator);
+ 
   return (
     <div>
       <h1>Join Page</h1>
