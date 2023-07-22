@@ -20,7 +20,7 @@ var stompClient=null;
     const  myMethod = () =>  {
       console.log("Inside My Method")
       if(!stompClient) {
-        let Sock = new SockJS("http://localhost:8080/SnakeLadder"); //server connection
+        let Sock = new SockJS(baseURL + "/SnakeLadder"); //server connection
         stompClient=over(Sock);
         stompClient.connect({}, onConnected, onError);
       }
@@ -28,24 +28,27 @@ var stompClient=null;
     };
 
     const onConnected = ()=>{
-      //setUserData({...userData, "connected":true});
       stompClient.subscribe('/joinPlayer/public', onJoinPlayer);
-      //stompClient.subscribe('/startGame/public', onGameStart);
-      //stompClient.subscribe('/user/' + userData.senderName + '/private', onPrivateMessageReceived);
+      stompClient.subscribe('/startGame/public', onStartGame);
       onJoinPlayer();
     };
 
-  const onError=(err)=>{
-    console.log(err);
-  };
+    const onError=(err)=>{
+      console.log(err);
+    };
 
-  const onJoinPlayer = async () => {
-    console.log("Inside Join Player in Join Page")
-    const response = await axios.get(
-             `${baseURL}/configure/getGame?gameId=${gameId}`
-           );
-    setPlayerBoxes(response.data.board.playerBoxes || []);
-  }
+    const onJoinPlayer = async () => {
+      console.log("Inside Join Player in Join Page")
+      const response = await axios.get(
+              `${baseURL}/configure/getGame?gameId=${gameId}`
+            );
+      setPlayerBoxes(response.data.board.playerBoxes || []);
+    }
+
+    const onStartGame = () => {
+      console.log("Inside onStartGame Method")
+      window.location.replace(`${window.location.origin}/board`);
+    }
 
 
 
@@ -73,21 +76,23 @@ var stompClient=null;
     }, []);
 
     const handleStartGame = () => {
-      const params = {
-        gameId: gameId,
-      };
+      let startGameId = gameId.toString()
+      // const params = {
+      //   gameId: gameId,
+      // };
 
-      axios
-        .post(`${baseURL}/configure/startGame?gameId=${gameId}`, null, { params })
-        .then((response) => {
-          if (response.status === 200) {
-            console.log("Response:", response.data);
-            alert("All the best! The game has started.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      // axios
+      //   .post(`${baseURL}/configure/startGame?gameId=${gameId}`, null, { params })
+      //   .then((response) => {
+      //     if (response.status === 200) {
+      //       console.log("Response:", response.data);
+      //       alert("All the best! The game has started.");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
+      stompClient.send('/app/startGame',{}, startGameId)
     };
     // console.log("ans=",isGameCreator);
     return (
