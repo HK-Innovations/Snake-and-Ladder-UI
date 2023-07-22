@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import baseURL from "../../config";
+import {over} from "stompjs";
+import SockJS from 'sockjs-client';
 
+var stompClient=null;
 const JoinGameId = () => {
   const [gameId, setGameId] = useState("");
 
@@ -13,17 +16,42 @@ const JoinGameId = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(`${baseURL}/player/join`, {
-        emailId: email,
-        gameId: gameId,
-      });
-      console.log(response);
-      window.location.replace(`${window.location.origin}/join`);
-    } catch (error) {
-      alert("You already added !!");
-      console.error(error);
+    let Sock = new SockJS(`${baseURL}/SnakeLadder`); //server connection
+    stompClient=over(Sock);
+    stompClient.connect({}, onConnected, onError);
+  
+    // try {
+    //   const response = await axios.post(`${baseURL}/player/join`, {
+    //     emailId: email,
+    //     gameId: gameId,
+    //   });
+    //   console.log(response);
+    //   window.location.replace(`${window.location.origin}/join`);
+    // } catch (error) {
+    //   alert("You already added !!");
+    //   console.error(error);
+    // }
+
+  };
+
+  const onConnected = ()=>{
+    stompClient.subscribe('/joinPlayer/public');
+    stompClient.subscribe('/startGame/public'); 
+    joinPlayer();
+  };
+
+  const onError=(err)=>{
+    console.log(err);
+  };
+
+  const joinPlayer=() => {
+    const joinPlayerReq = {
+      gameId: gameId,
+      emailId: email,
     }
+    stompClient.send('/app/joinPlayer',{},JSON.stringify(joinPlayerReq));
+    localStorage.setItem("gameId", gameId);
+    window.location.replace(`${window.location.origin}/join`);
   };
 
   return (

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Snake from "../../Assets/snake.png";
-import Ladder from "../../Assets/ladder.png";
+import Snake from "../../Assets/GameConfig/snake.png";
+import Ladder from "../../Assets/GameConfig/ladder.png";
 import baseURL from "../../config";
 
 
