@@ -16,27 +16,14 @@ const JoinGameId = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let Sock = new SockJS(`${baseURL}/SnakeLadder`); //server connection
+    let Sock = new SockJS(baseURL + "/SnakeLadder"); //server connection
     stompClient=over(Sock);
     stompClient.connect({}, onConnected, onError);
-  
-    // try {
-    //   const response = await axios.post(`${baseURL}/player/join`, {
-    //     emailId: email,
-    //     gameId: gameId,
-    //   });
-    //   console.log(response);
-    //   window.location.replace(`${window.location.origin}/join`);
-    // } catch (error) {
-    //   alert("You already added !!");
-    //   console.error(error);
-    // }
-
   };
 
   const onConnected = ()=>{
-    stompClient.subscribe('/joinPlayer/public');
-    stompClient.subscribe('/startGame/public'); 
+    stompClient.subscribe('/joinPlayerAll/public');
+    stompClient.subscribe('/startGameAll/public');
     joinPlayer();
   };
 

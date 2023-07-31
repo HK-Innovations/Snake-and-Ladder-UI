@@ -1,45 +1,72 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ReactDice from "react-dice-complete";
-import axios from "axios";
 import "./Board.css";
+import { over } from "stompjs";
+import SockJS from "sockjs-client";
 import baseURL from "../../config";
 
+var stompClient = null;
 const Board = () => {
   //dice
   const diceRef = useRef();
   const [diceValues, setDiceValues] = useState([]);
 
-  const storedData = localStorage.getItem("gameData");
+  const storedData = localStorage.getItem("gameDataNEW");
   const parsedData = JSON.parse(storedData);
-  // console.log(parsedData);
+  const noOfDices = parsedData.board.dice.count;
+  console.log("Parsed Data Log->", parsedData);
   const gameId = parsedData?.id;
   const emailId = parsedData?.emailId;
+  useEffect(() => {
+    myMethod();
+  }, []);
+
+  const myMethod = () => {
+    console.log("Inside My Method");
+    if (!stompClient) {
+      const url =  `${baseURL}/SnakeLadder`;
+      console.log(url);
+      let Sock = new SockJS(url); //server connection
+      stompClient = over(Sock);
+      stompClient.connect({}, onConnected, onError);
+    }
+  };
+  
+  const onConnected = () => {
+    stompClient.subscribe("/movePlayerAll/public", onMovePlayer);
+  };
+
+  const onError = (err) => {
+    console.log(err);
+  };
+ 
 
   const handleRoll = () => {
     diceRef.current.rollAll();
+
+    const movePlayerReq = {
+      gameId: gameId,
+      emailId: emailId,
+      sum: diceValues,
+    };
+
+    console.log("movePlayerReq->", movePlayerReq);
+    stompClient.send("/app/movePlayer", {}, JSON.stringify(movePlayerReq));
+    console.log("after send");
   };
 
   const handleDiceRoll = (values) => {
     setDiceValues(values);
 
-    // const apiUrl = `${baseURL}/player/movePlayer`; //change
-
-    // try {
-    //   const response = axios.post(apiUrl, {
-    //     gameId: gameId,
-    //     diceValue: diceValues,
-    //     currentPlayer: emailId,
-    //   });
-    //   console.log("Dice Roll Response:", response.data);
-    // } catch (error) {
-    //   console.error("Error making POST request:", error);
-    // }
   };
+  const onMovePlayer = (response) => {
+    // const response = JSON.parse(message.body);
+    console.log(response.body);
+  };
+  const totalRows = parsedData.boardRows;
+  const totalColumns = parsedData.boardColumns;
 
-  const totalRows = 10;
-  const totalColumns = 10;
-
-  const [playerPosition, setPlayerPosition] = useState(1); // Initial player position
+  const [playerPosition, setPlayerPosition] = useState(1);
 
   // Render the board cells
   const renderBoardCells = () => {
@@ -67,11 +94,12 @@ const Board = () => {
 
   return (
     <div>
+
       <div className="board">{renderBoardCells()}</div>
 
       <div>
         <ReactDice
-          numDice={2}
+          numDice={noOfDices}
           rollTime={1}
           disableIndividual
           ref={diceRef}
