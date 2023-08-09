@@ -16,7 +16,8 @@ import img8 from "../../Assets/PicturesSlider/p3.jpg";
 import img9 from "../../Assets/PicturesSlider/p4.jpg";
 import img10 from "../../Assets/PicturesSlider/p5.jpg";
 import img11 from "../../Assets/PicturesSlider/p6.jpg";
-
+let payloadData;
+let decodedPayload;
 const Login = () => {
   const decodeAccessToken = (accessToken) => {
     // Split the JWT into its three parts
@@ -30,7 +31,7 @@ const Login = () => {
     const encodedPayload = parts[1];
 
     // Decode the base64-encoded payload
-    let decodedPayload;
+    
     try {
       decodedPayload = atob(encodedPayload);
     } catch (error) {
@@ -39,7 +40,7 @@ const Login = () => {
     }
 
     // Parse the decoded payload as JSON
-    let payloadData;
+    
     try {
       payloadData = JSON.parse(decodedPayload);
     } catch (error) {

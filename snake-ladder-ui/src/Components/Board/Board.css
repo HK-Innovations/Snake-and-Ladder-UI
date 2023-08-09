@@ -14,7 +14,7 @@
 }
 
 .player {
-  background-color: red;
+  /* background-color: red; */
 }
 
 button {
@@ -44,3 +44,21 @@ button {
 }
 
 /* ... your existing styles ... */
+/* ... (existing styles) */
+
+.cell .player {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.cell .player.player-1 {
+  background-color: red; /* Player 1 color */
+}
+
+.cell .player.player-2 {
+  background-color: blue; /* Player 2 color */
+}
+
+/* Add more player classes for additional players as needed */

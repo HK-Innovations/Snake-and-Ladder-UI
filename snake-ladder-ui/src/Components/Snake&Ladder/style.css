@@ -1,0 +1,18 @@
+.line {
+    position: absolute;
+    /* border: 1px solid rgb(84, 15, 232); */
+    border-width: 2px;
+    border-style: solid;
+    /* border-radius: 1px solid; */
+    pointer-events: none;
+    transform-origin: 0 0;
+    /* border-image: url('https://www.google.com/search?q=ladder+for+board&tbm=isch&chips=q:ladder+board,g_1:clipart:NuzwQ860FB4%3D&client=ubuntu-sn&hs=JZH&hl=en&sa=X&ved=2ahUKEwjGmoiF5smAAxXY0aACHVNGBSYQ4lYoBnoECAEQQA&biw=1846&bih=968#imgrc=FGneRvK-wrz7LM') 30 stretch; */
+  }
+
+  #snake {
+    border-color: red;
+  }
+
+  #ladder {
+    border-color: black;
+  }

@@ -9,7 +9,7 @@ const JoinGameId = () => {
   const [gameId, setGameId] = useState("");
 
   const email = localStorage.getItem("email");
-
+// console.log("email->", email);
   const handleInputChange = (event) => {
     setGameId(event.target.value);
   };
