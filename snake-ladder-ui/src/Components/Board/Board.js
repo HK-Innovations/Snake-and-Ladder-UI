@@ -6,6 +6,9 @@ import SockJS from "sockjs-client";
 import baseURL from "../../config";
 import Line from "../Snake&Ladder/Line";
 import "bootstrap/dist/css/bootstrap.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 var stompClient = null;
 
@@ -29,6 +32,7 @@ const Board = () => {
   const totalRows = parsedData?.boardRows;
   const totalColumns = parsedData?.boardColumns;
   const playerBoxes = parsedData?.board?.playerBoxes;
+  // console.log(playerBoxes)
   const snakeLadder = new Map(Object.entries(parsedData.board.snakeOrLadder));
 
   const [oldPosition, setOldPosition] = useState();
@@ -58,6 +62,7 @@ const Board = () => {
   const handleRoll = () => {
     diceRef.current.rollAll();
     isDiceRolled = true;
+   
   };
 
   const handleDiceRoll = (values) => {
@@ -75,75 +80,99 @@ const Board = () => {
   };
   const [playersPosition, setPlayersPosition] = useState({});
 // console.log("playerPositions=", playersPosition);
+
   const onMovePlayer = (response) => {
     let message = JSON.parse(response.body);
-
+console.log(message);
     setCurrentPlayer(message.emailId);
     setNextPlayer(message.nextPlayerTurn);
     setOldPosition(message.oldPosition);
     setNewPosition(message.newPosition);
 
-    const playerEmail = message.emailId;
-
+    const playerSeq = message.seq;
+    const oldPos=message.oldPosition;
+    const newPos=message.newPosition;
     // Update playersPosition with the new position
     setPlayersPosition((prevPositions) => ({
       ...prevPositions,
-      [playerEmail]: message.newPosition,
+      [playerSeq]: message.newPosition,
     }));
+    const diff=newPos-oldPos;
+  console.log(diff);
+    if(message.gameFinished === true){
+      toast(
+        `Player P${playerSeq} WON the game !! Wohoooo !!`,
+        {
+          autoClose: 5000, // Auto-close after 2 seconds
+        }
+      );
+      window.location.replace(`${window.location.origin}/fire-works`);
+      
+    }
+    toast(
+      `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
+      {
+        autoClose: 2000, // Auto-close after 2 seconds
+      }
+    );
+
   };
-  const [playerColors, setPlayerColors] = useState({}); 
-  
+ 
   
   const renderBoardCells = () => {
-    let cellCount = totalRows * totalColumns;
-    let order = 1;
-  
     const cells = [];
   
+    const tokenStyle = {
+      backgroundColor: "#bde5cb",
+      borderRadius: '50%',
+      width: '40px',
+      height: '40px',
+      margin: '5px',
+    };
+  
     for (let row = totalRows - 1; row >= 0; row--) {
-      if (order === 1) {
-        order = -1;
-        cellCount = row * totalColumns + totalColumns;
-      } else {
-        order = 1;
-        cellCount = row * totalColumns + 1;
-      }
       const rows = [];
       for (let column = 0; column < totalColumns; column++) {
-        const cellPosition = cellCount;
+        const cellCount = row * totalColumns + column + 1;
   
-        // Determine if the current cell has a player
-        const hasPlayer = Object.values(playersPosition).includes(cellPosition);
-  
-        // Get the email of the player in the current cell
-        const playerEmailInCell = Object.keys(playersPosition).find(
-          (email) => playersPosition[email] === cellPosition
+        // Find the player whose position matches the current cell
+        const playerSeq = Object.keys(playersPosition).find(
+          (seq) => playersPosition[seq] === cellCount
         );
-  
-        // Get the color for the player
-        const playerColor = playerColors[playerEmailInCell];
-  
-        // Determine the class name based on player presence
-        const cellClassName = `cell ${hasPlayer ? "player" : ""}`;
   
         rows.push(
           <div
             key={cellCount}
             id={cellCount}
-            className={cellClassName}
+            className={`cell ${playerSeq ? "player" : ""}`}
             style={{
-              backgroundColor: hasPlayer ? playerColor : "white",
+              width: "10vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
             class="shadow p-3 mb-1 bg-white rounded"
-            style={{ width: "10vh" }}
           >
+            {/* Display player email */}
+            {playerSeq && (
+              <div
+                style={{
+                  ...tokenStyle,
+                 
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                P{playerSeq}
+              </div>
+            )}
             {cellCount}
           </div>
         );
-        cellCount += order;
       }
       cells.push(
-        <div className="d-flex" key={cellCount}>
+        <div className="d-flex" key={row}>
           {rows}
         </div>
       );
@@ -151,6 +180,7 @@ const Board = () => {
   
     return cells;
   };
+  
   
 
 
@@ -192,8 +222,8 @@ const Board = () => {
             <ul>
               {playerBoxes.map((playerBox) => (
                 <li key={playerBox.pid}>
-                  PlayerId= {playerBox.pid} , PlayerSequence= {playerBox.seq} ,
-                  ID={playerBox.id} , PlayerPosition={playerBox.position}
+                  Player uniqueID= P{playerBox.seq} , Name= {playerBox.name}
+                
                 </li>
               ))}
             </ul>
@@ -201,18 +231,14 @@ const Board = () => {
         </div>
       </div>
       {/* // current Player */}
-      <h3> Current Player={currentPlayer}</h3>
+      {/* <h3> Current Player={currentPlayer}</h3> */}
       {/* // next player */}
       <h3> Next Player Turn={nextPlayer}</h3>
-      <h3>New position={newPosition}</h3>
+      {/* <h3>New position={newPosition}</h3>
       <h3>old position={oldPosition}</h3>
-      <h3>diff={newPosition - oldPosition}</h3>
+      <h3>diff={newPosition - oldPosition}</h3> */}
        {/* Display player's color */}
-       {userEmail && playerColors[userEmail] && (
-  <div style={{ color: playerColors[userEmail] }}>
-    Your Color: {playerColors[userEmail]}
-  </div>
-)}
+      
 
     </div>
   );

@@ -15,6 +15,7 @@ import JoinPage from "./Components/Join-page/JoinPage";
 import JoinGameId from "./Components/Join-gameID/JoinGameId.js";
 import FireWorks from "./Components/FireWorks";
 
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ export default function App() {
       <Route path="/join" element={<JoinPage />} />
       <Route path="/join-gameId" element={<JoinGameId />} />
       <Route path="/board" element={<Board />} />
+      <Route path="/fire-works" element={<FireWorks/>} />
     </Routes>
   </BrowserRouter>
   );

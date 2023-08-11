@@ -22,7 +22,7 @@ const FireWorks = () => {
         return;
       }
 
-      const particleCount = 100 * (timeLeft / duration);
+      const particleCount = 300 * (timeLeft / duration);
 
       confetti(
         Object.assign({}, defaults, {
@@ -52,55 +52,13 @@ const FireWorks = () => {
 
   return (
     <>
-      <canvas id="confetti" width={width} height={height} />
+      <canvas id="confetti" width={width} height={height}>
+      <h1>Winner !!</h1>
+        </canvas>
+      
     </>
   );
 };
 
 export default FireWorks;
 
-
-
-
-
-
-
-
-
-
-// join player
-// export const subscribeToJoinPlayer = () => {
-//   if (isSocketConnected) {
-//     stompClient.subscribe("/joinPlayer/public");
-//   }
-// };
-
-// export const sendJoinPlayerData = (data) => {
-//   if (isSocketConnected) {
-//     stompClient.send("/app/joinPlayer", {}, JSON.stringify(data));
-//     console.log("heiiiiiiiiiiiii")
-//   }
-// };
-// // start game
-// export const subscribeToStartGame = () => {
-//   if (isSocketConnected) {
-//     stompClient.subscribe("/startGame/public");
-//   }
-// };
-// export const sendStartGameData = (data) => {
-//   if (isSocketConnected) {
-//     stompClient.send("/app/startGame", {}, JSON.stringify(data));
-//   }
-// };
-// // move player
-// export const subscribeToMovePlayer = (onMovePlayer) => {
-//   if (isSocketConnected) {
-//     stompClient.subscribe("/movePlayer/public", onMovePlayer);
-//   }
-// };
-
-// export const sendMovePlayerData = (data) => {
-//   if (isSocketConnected) {
-//     stompClient.send("/app/movePlayer", {}, JSON.stringify(data));
-//   }
-// };
