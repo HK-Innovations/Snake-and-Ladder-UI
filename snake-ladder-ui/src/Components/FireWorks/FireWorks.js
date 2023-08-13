@@ -52,13 +52,20 @@ const FireWorks = () => {
 
   return (
     <>
-      <canvas id="confetti" width={width} height={height}>
-      <h1>Winner !!</h1>
-        </canvas>
-      
+      <canvas id="confetti" width={width} height={height}></canvas>
+      <h1 classname="fire-works-text"
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: "1",
+        }}
+      >
+        Winner !!
+      </h1>
     </>
   );
 };
 
 export default FireWorks;
-

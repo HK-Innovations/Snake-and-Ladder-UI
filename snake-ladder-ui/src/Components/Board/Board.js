@@ -9,16 +9,24 @@ import "bootstrap/dist/css/bootstrap.css";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import { particlesOptions } from "./particlesConfig";
+import { Random } from "react-animated-text";
 
 var stompClient = null;
 
 const Board = () => {
+  const particlesInit = (engine) => {
+    loadFull(engine);
+  };
   //dice
   const diceRef = useRef();
   const [diceValues, setDiceValues] = useState([]);
   
   let isDiceRolled = false;
 
+  
   const cells = [];
 
   const storedData = localStorage.getItem("gameDataNEW"); // stored in JoinPage in onJoinPlayer()
@@ -103,7 +111,7 @@ console.log(message);
       toast(
         `Player P${playerSeq} WON the game !! Wohoooo !!`,
         {
-          autoClose: 5000, // Auto-close after 2 seconds
+          autoClose: 9000, // Auto-close after 2 seconds
         }
       );
       window.location.replace(`${window.location.origin}/fire-works`);
@@ -112,7 +120,7 @@ console.log(message);
     toast(
       `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
       {
-        autoClose: 2000, // Auto-close after 2 seconds
+        autoClose: 5000, // Auto-close after 2 seconds
       }
     );
 
@@ -181,22 +189,29 @@ console.log(message);
     return cells;
   };
   
-  
+
 
 
   return (
-    <div>
+    <div className="particles-container">
+   <Particles init={particlesInit} options={particlesOptions} />
+
       {/* // user-details */}
-      <h3> Hello, Player {accessName}</h3>
-      <h5> Player email- {userEmail} </h5>
-      <div className="board">{renderBoardCells()}</div>
+      <h3 className="mt-5 ms-5 text-white"> <span class="board-wave">👋</span> Hello, Player {accessName}</h3>
+      <h5 className="mt-3 ms-5" style={{color:"yellow"}}> Player email- {userEmail} </h5>
+
+      <div className="row">
+
+      <div className="col-9">
+ 
+      <div className="mt-5 ms-5 board">{renderBoardCells()}</div>
       <div>
         {Array.from(snakeLadder).map(([key, value]) => (
           <Line from={key} to={value}></Line>
         ))}
       </div>
 
-      <div>
+      <div className="mt-5 ms-5">
         <ReactDice
           numDice={parsedData.board.dice.count}
           rollTime={1}
@@ -204,43 +219,59 @@ console.log(message);
           ref={diceRef}
           faceColor="radial-gradient(rgb(255, 60, 60), rgb(180, 0, 0))"
           dotColor="#fff"
-          dieSize={40}
+          dieSize={80}
           rollDone={handleDiceRoll}
         />
         {nextPlayer === userEmail && (
-          <button onClick={handleRoll}>Roll Dice</button>
+  
+          <button class="mt-5  btn-whimsical" onClick={handleRoll}>Roll Dice</button>
         )}
-        {/* <button onClick={handleRoll}>Rotate</button> */}
-        <div> Sum : {diceValues} </div>
+        
+        
+        </div>
+        <div className="text-white ms-5 mt-5 "> <b>Sum : {diceValues} </b> </div>
+        </div>
+      <div className="col-3">
+       
+      {/* //players list */}
+      <div className="index">
+      <main className="board-app">
+  
+  <div className="board-heading">
+    <Random
+      text="PLAYER LIST"
+      effect="jump"
+      effectChange={4.0}
+      effectDuration={7.0}
+    />
+  </div>
 
-        {/* //players list */}
-        <div>
-          <h1>Player List</h1>
+
+</main>
+          {/* <h1 className="text-white">Player List</h1> */}
+          <h3 className="ms-4 text-white">PlayerID - PlayerName</h3>
           {playerBoxes.length === 0 ? (
             <p>No players have joined yet.</p>
           ) : (
             <ul>
               {playerBoxes.map((playerBox) => (
+
                 <li key={playerBox.pid}>
-                  Player uniqueID= P{playerBox.seq} , Name= {playerBox.name}
+                   P{playerBox.seq} - {playerBox.name}
                 
                 </li>
               ))}
             </ul>
           )}
         </div>
-      </div>
-      {/* // current Player */}
-      {/* <h3> Current Player={currentPlayer}</h3> */}
-      {/* // next player */}
-      <h3> Next Player Turn={nextPlayer}</h3>
-      {/* <h3>New position={newPosition}</h3>
-      <h3>old position={oldPosition}</h3>
-      <h3>diff={newPosition - oldPosition}</h3> */}
-       {/* Display player's color */}
       
 
-    </div>
+      <h3 className="mt-5" style={{color:"yellow"}}> Next Player Turn={nextPlayer}</h3> 
+      </div>
+
+      </div>
+</div>
+          
   );
 };
 

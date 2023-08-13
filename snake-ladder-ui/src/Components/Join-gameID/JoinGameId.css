@@ -1,0 +1,32 @@
+/* JoinGameId.css */
+
+.join-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .join-game-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .join-form {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .join-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  
+  .join-gif {
+    max-width: 100%;
+    height: auto;
+  }
+  
