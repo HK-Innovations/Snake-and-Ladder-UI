@@ -1,25 +1,33 @@
 import React from "react";
+import Particles from "react-tsparticles";
+import { loadBigCirclesPreset } from "tsparticles-preset-big-circles";
+import "./Template.css";
+
+function particlesInit(tsParticles) {
+  console.log("init", tsParticles);
+
+  loadBigCirclesPreset(tsParticles);
+}
+
 
 export default function Template() {
   return (
-    <div className="mt-4 ml-4">
-      <button
-        className="btn btn-warning mr-2"
-        onClick={() => {
+    <div className="template-app-container">
+       <Particles
+      options={{
+        preset: "big-circles"
+      }}
+      init={particlesInit}
+    />
+      <div className="template-button-container">
+        <button className="template-button"  onClick={() => {
           window.location.replace(`${window.location.origin}/join-gameId`);
-        }}
-      >
-        JOIN Game with GameId
-      </button>
-      <button className="btn btn-primary mr-2">Default Template</button>
-      <button
-        className="btn btn-secondary mr-4"
-        onClick={() => {
+        }}>Join with GameID</button>
+        <button className="ms-5 template-button" >Default</button>
+        <button className="ms-5 template-button"  onClick={() => {
           window.location.replace(`${window.location.origin}/game-config`);
-        }}
-      >
-        Own Template
-      </button>
+        }}>Own Template</button>
+      </div>
     </div>
   );
 }

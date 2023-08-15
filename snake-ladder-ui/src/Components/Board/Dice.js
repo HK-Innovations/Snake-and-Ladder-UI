@@ -26,7 +26,7 @@ export default function Dice() {
         ref={diceRef}
         faceColor="radial-gradient(rgb(255, 60, 60), rgb(180, 0, 0))"
         dotColor="#fff"
-        dieSize={40}
+        dieSize={180}
         rollDone={handleDiceRoll}
       />
       <button onClick={handleRoll}>Rotate</button>

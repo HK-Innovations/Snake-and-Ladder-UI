@@ -1,0 +1,9 @@
+.fire-works-text{
+    text-align: center;
+    font-family: 'Courgette', cursive;
+    padding-top: 250px;
+    font-size: 100px;
+    letter-spacing: 12px; 
+    animation: flicker 1.5s infinite alternate;
+    color: rgb(230, 230, 230);
+}

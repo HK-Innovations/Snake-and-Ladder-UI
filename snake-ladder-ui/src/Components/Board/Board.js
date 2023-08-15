@@ -1,90 +1,281 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ReactDice from "react-dice-complete";
-import axios from "axios";
 import "./Board.css";
+import { over } from "stompjs";
+import SockJS from "sockjs-client";
 import baseURL from "../../config";
+import Line from "../Snake&Ladder/Line";
+import "bootstrap/dist/css/bootstrap.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import { particlesOptions } from "./particlesConfig";
+import { Random } from "react-animated-text";
+
+var stompClient = null;
 
 const Board = () => {
+  const particlesInit = (engine) => {
+    loadFull(engine);
+  };
   //dice
   const diceRef = useRef();
   const [diceValues, setDiceValues] = useState([]);
+  
+  let isDiceRolled = false;
 
-  const storedData = localStorage.getItem("gameData");
+  
+  const cells = [];
+
+  const storedData = localStorage.getItem("gameDataNEW"); // stored in JoinPage in onJoinPlayer()
+  const userEmail = localStorage.getItem("email"); // stored in login via access token decode
+  const accessName = localStorage.getItem("name"); // stored in login via access token decode
+
   const parsedData = JSON.parse(storedData);
-  // console.log(parsedData);
+
   const gameId = parsedData?.id;
   const emailId = parsedData?.emailId;
+  const totalRows = parsedData?.boardRows;
+  const totalColumns = parsedData?.boardColumns;
+  const playerBoxes = parsedData?.board?.playerBoxes;
+  // console.log(playerBoxes)
+  const snakeLadder = new Map(Object.entries(parsedData.board.snakeOrLadder));
+
+  const [oldPosition, setOldPosition] = useState();
+  const [newPosition, setNewPosition] = useState();
+  const [currentPlayer, setCurrentPlayer] = useState("");
+  const [nextPlayer, setNextPlayer] = useState(emailId);
+  useEffect(() => {
+    myMethod();
+  }, []);
+
+  const myMethod = () => {
+    if (!stompClient) {
+      let Sock = new SockJS(baseURL + "/SnakeLadder"); //server connection
+      stompClient = over(Sock);
+      stompClient.connect({}, onConnected, onError);
+    }
+  };
+
+  const onConnected = () => {
+    stompClient.subscribe("/movePlayerAll/public", onMovePlayer);
+  };
+
+  const onError = (err) => {
+    console.log(err);
+  };
 
   const handleRoll = () => {
     diceRef.current.rollAll();
+    isDiceRolled = true;
+   
   };
 
   const handleDiceRoll = (values) => {
-    setDiceValues(values);
-
-    // const apiUrl = `${baseURL}/player/movePlayer`; //change
-
-    // try {
-    //   const response = axios.post(apiUrl, {
-    //     gameId: gameId,
-    //     diceValue: diceValues,
-    //     currentPlayer: emailId,
-    //   });
-    //   console.log("Dice Roll Response:", response.data);
-    // } catch (error) {
-    //   console.error("Error making POST request:", error);
-    // }
+    if (stompClient != null && isDiceRolled === true) {
+      setDiceValues(values);
+      const movePlayerReq = {
+        gameId: gameId,
+        emailId: userEmail,
+        sum: values,
+      };
+      stompClient.send("/app/movePlayer", {}, JSON.stringify(movePlayerReq));
+      console.log("after send");
+      isDiceRolled = false;
+    }
   };
+  const [playersPosition, setPlayersPosition] = useState({});
+// console.log("playerPositions=", playersPosition);
 
-  const totalRows = 10;
-  const totalColumns = 10;
+  const onMovePlayer = (response) => {
+    let message = JSON.parse(response.body);
+console.log(message);
+    setCurrentPlayer(message.emailId);
+    setNextPlayer(message.nextPlayerTurn);
+    setOldPosition(message.oldPosition);
+    setNewPosition(message.newPosition);
 
-  const [playerPosition, setPlayerPosition] = useState(1); // Initial player position
+    const playerSeq = message.seq;
+    const oldPos=message.oldPosition;
+    const newPos=message.newPosition;
+    // Update playersPosition with the new position
+    setPlayersPosition((prevPositions) => ({
+      ...prevPositions,
+      [playerSeq]: message.newPosition,
+    }));
+    const diff=newPos-oldPos;
+  console.log(diff);
+    if(message.gameFinished === true){
+      toast(
+        `Player P${playerSeq} WON the game !! Wohoooo !!`,
+        {
+          autoClose: 9000, // Auto-close after 2 seconds
+        }
+      );
+      window.location.replace(`${window.location.origin}/fire-works`);
+      
+    }
+    toast(
+      `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
+      {
+        autoClose: 5000, // Auto-close after 2 seconds
+      }
+    );
 
-  // Render the board cells
+  };
+ 
+  
   const renderBoardCells = () => {
     const cells = [];
-
-    for (let row = totalRows; row >= 1; row--) {
-      for (let column = 1; column <= totalColumns; column++) {
-        const cellCount = (row - 1) * totalColumns + column;
-
-        const cell = (
+  
+    const tokenStyle = {
+      backgroundColor: "#bde5cb",
+      borderRadius: '50%',
+      width: '40px',
+      height: '40px',
+      margin: '5px',
+    };
+  
+    for (let row = totalRows - 1; row >= 0; row--) {
+      const rows = [];
+      for (let column = 0; column < totalColumns; column++) {
+        const cellCount = row * totalColumns + column + 1;
+  
+        // Find the player whose position matches the current cell
+        const playerSeq = Object.keys(playersPosition).find(
+          (seq) => playersPosition[seq] === cellCount
+        );
+  
+        rows.push(
           <div
             key={cellCount}
-            className={`cell ${playerPosition === cellCount ? "player" : ""}`}
+            id={cellCount}
+            className={`cell ${playerSeq ? "player" : ""}`}
+            style={{
+              width: "10vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            class="shadow p-3 mb-1 bg-white rounded"
           >
+            {/* Display player email */}
+            {playerSeq && (
+              <div
+                style={{
+                  ...tokenStyle,
+                 
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                P{playerSeq}
+              </div>
+            )}
             {cellCount}
           </div>
         );
-
-        cells.push(cell);
       }
+      cells.push(
+        <div className="d-flex" key={row}>
+          {rows}
+        </div>
+      );
     }
-
+  
     return cells;
   };
+  
+
+
 
   return (
-    <div>
-      <div className="board">{renderBoardCells()}</div>
+    <div className="particles-container">
+   <Particles init={particlesInit} options={particlesOptions} />
 
+      {/* // user-details */}
+      <h3 className="mt-5 ms-5 text-white"> <span class="board-wave">👋</span> Hello, Player {accessName}</h3>
+      <h5 className="mt-3 ms-5" style={{color:"yellow"}}> Player email- {userEmail} </h5>
+
+      <div className="row">
+
+      <div className="col-9">
+ 
+      <div className="mt-5 ms-5 board">{renderBoardCells()}</div>
       <div>
+        {Array.from(snakeLadder).map(([key, value]) => (
+          <Line from={key} to={value}></Line>
+        ))}
+      </div>
+
+      <div className="mt-5 ms-5">
         <ReactDice
-          numDice={2}
+          numDice={parsedData.board.dice.count}
           rollTime={1}
           disableIndividual
           ref={diceRef}
           faceColor="radial-gradient(rgb(255, 60, 60), rgb(180, 0, 0))"
           dotColor="#fff"
-          dieSize={40}
+          dieSize={80}
           rollDone={handleDiceRoll}
         />
-        <button onClick={handleRoll}>Rotate</button>
-        <div> Sum : {diceValues} </div>
+        {nextPlayer === userEmail && (
+  
+          <button class="mt-5  btn-whimsical" onClick={handleRoll}>Roll Dice</button>
+        )}
+        
+        
+        </div>
+        <div className="text-white ms-5 mt-5 "> <b>Sum : {diceValues} </b> </div>
+        </div>
+      <div className="col-3">
+       
+      {/* //players list */}
+      <div className="index">
+      <main className="board-app">
+  
+  <div className="board-heading">
+    <Random
+      text="PLAYER LIST"
+      effect="jump"
+      effectChange={4.0}
+      effectDuration={7.0}
+    />
+  </div>
+
+
+</main>
+          {/* <h1 className="text-white">Player List</h1> */}
+          <h3 className="ms-4 text-white">PlayerID - PlayerName</h3>
+          {playerBoxes.length === 0 ? (
+            <p>No players have joined yet.</p>
+          ) : (
+            <ul>
+              {playerBoxes.map((playerBox) => (
+
+                <li key={playerBox.pid}>
+                   P{playerBox.seq} - {playerBox.name}
+                
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      
+
+      <h3 className="mt-5" style={{color:"yellow"}}> Next Player Turn={nextPlayer}</h3> 
       </div>
-    </div>
+
+      </div>
+</div>
+          
   );
 };
 
 export default Board;
+
+
+
