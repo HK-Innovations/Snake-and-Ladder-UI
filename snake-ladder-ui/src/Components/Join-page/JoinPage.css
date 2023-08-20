@@ -1,0 +1,73 @@
+/* JoinPage.css */
+
+.join-page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color:  whitesmoke;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .join-page-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .game-id-section {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .player-list-section {
+    margin-top: 20px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .player-list {
+    list-style: circle;
+    padding: 0;
+  }
+  
+  .player-list-item {
+    margin-bottom: 5px;
+  }
+  
+  .start-game-btn {
+    margin-top: 20px;
+  }
+ 
+/* button animation  */
+.start-game-btn-whimsical {
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    z-index: 2; 
+    /* margin-top: 300px; */
+    display: inline-block;
+    padding: 20px 25px;
+    font-size: 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: #cbf4d9;
+    color: black;
+    font-weight: 700;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .start-game-btn-whimsical:hover {
+    transform: rotate(-10deg) scale(1.1);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .start-game-btn-whimsical:active {
+    transform: rotate(0) scale(1);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }

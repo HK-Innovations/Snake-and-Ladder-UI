@@ -2,13 +2,13 @@ import React from "react";
 import Particles from "react-tsparticles";
 import { loadBigCirclesPreset } from "tsparticles-preset-big-circles";
 import "./Template.css";
+import SideDrawer from "../SideDrawer/SideDrawer";
 
 function particlesInit(tsParticles) {
   console.log("init", tsParticles);
 
   loadBigCirclesPreset(tsParticles);
 }
-
 
 export default function Template() {
   return (
@@ -19,7 +19,14 @@ export default function Template() {
       }}
       init={particlesInit}
     />
+
+
+      <div className="template-side-drawer-btn">
+        <SideDrawer/>
+      </div>
       <div className="template-button-container">
+      
+    
         <button className="template-button"  onClick={() => {
           window.location.replace(`${window.location.origin}/join-gameId`);
         }}>Join with GameID</button>

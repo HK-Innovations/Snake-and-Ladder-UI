@@ -1,45 +1,40 @@
-/* Template.css */
-
-/* Style for the main container */
 .template-app-container {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
-
-/* Style for the particles canvas */
 .react-tsparticles {
   position: absolute;
   top: 0;
   left: 0;
 }
-
-/* Style for the button container */
 .template-button-container {
   position: absolute;
-  top: 50%; /* Vertically center the button container */
-  left: 50%; /* Horizontally center the button container */
-  transform: translate(-50%, -50%); /* Center alignment */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
-/* Style for the buttons */
 .template-button {
   width: 200px;
   height: 200px;
-  background-color: #333;
-  color: white;
+  background-color: #cbf4d9;
+  color: #000;
   border: none;
-  border-radius: 90%; /* Make it circular */
+  border-radius: 90%;
   font-weight: 700;
   font-size: larger;
   cursor: pointer;
-  margin-top: 10px; /* Add spacing between buttons */
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-/* Add more styles as needed */
+.template-side-drawer-btn {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+}

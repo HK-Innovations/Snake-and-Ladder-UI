@@ -1,0 +1,18 @@
+.side-drawer-btn{
+    position: absolute;
+    top: 3%; 
+    left: 3%; 
+    transform: translate(-50%, -50%);
+    background-color:  #cbf4d9 ;
+    padding: 15px;
+    border-radius: 14px;
+  }
+  .side-drawer-btn-color{
+    color: black; 
+  }
+  .side-drawer-content{
+    background-color: #cbf4d9;
+  }
+  .side-drawer-animation{
+    margin-top: 400px;
+  }
