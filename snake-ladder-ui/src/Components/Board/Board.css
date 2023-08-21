@@ -67,18 +67,15 @@ button {
 /* button animation  */
 .btn-whimsical {
   position: absolute;
-  /* top: 50%;
-  left: 50%; */
-  /* transform: translate(-50%, -50%); */
   z-index: 2; 
-  margin-top: 300px;
+  /* margin-top: 400px; */
   display: inline-block;
   padding: 20px 25px;
   font-size: 20px;
   border: none;
   border-radius: 50px;
-  background-color: #ff6f69;
-  color: #ffffff;
+  background-color: #cbf4d9;
+  color: #000000;
   font-weight: 700;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -132,20 +129,3 @@ button {
 }
 /* /
  */
- .board-app {
-  /* background-color: rgb(161, 108, 214); */
-  color: aqua;
-  font-weight: 700;
-  height: 20vh;
-  /* max-width: 100%; */
-  /* border-radius: 5px; */
-  /* padding: 20px; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-}
-.board-heading {
-  position: relative;
-  font-size: 40px;
-}
