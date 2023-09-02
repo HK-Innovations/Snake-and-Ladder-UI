@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 import JoinPage from "./Components/Join-page/JoinPage";
 import JoinGameId from "./Components/Join-gameID/JoinGameId.js";
-import FireWorks from "./Components/FireWorks/FireWorks";
+import FireWorks from "./Components/FireWorks/FireWorks.js";
 
 
 export default function App() {
