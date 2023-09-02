@@ -1,18 +1,29 @@
-body {
-  margin: 0;
-  font: normal 75% Arial, Helvetica, sans-serif;
+.game-config-btn-color{
+  background-color:#cbf4d9 ;
 }
-canvas {
-  display: block;
-  vertical-align: bottom;
+
+
+/* button animation  */
+.game-config-btn-whimsical {
+  z-index: 2; 
+  display: inline-block;
+  padding: 20px 25px;
+  font-size: 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: #cbf4d9;
+  color: black;
+  font-weight: 700;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-#tsparticles {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  background-image: url("");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
+
+.game-config-btn-whimsical:hover {
+  transform: rotate(-10deg) scale(1.1);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.game-config-btn-whimsical:active {
+  transform: rotate(0) scale(1);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }

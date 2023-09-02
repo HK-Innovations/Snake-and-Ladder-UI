@@ -118,13 +118,18 @@ console.log(message);
       );
       
     }
-    toast(
-      `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
-      {
-        autoClose: 5000, // Auto-close after 2 seconds
-      }
-    );
-
+    else{
+      toast(
+        `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
+        {
+          autoClose: 5000, // Auto-close after 2 seconds
+          position: "bottom-right",
+          
+        }
+      );
+  
+    }
+ 
   };
  
   
@@ -168,16 +173,19 @@ console.log(message);
               <div
                 style={{
                   ...tokenStyle,
-                 
+                
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                
               >
+                
                 P{playerSeq}
               </div>
             )}
             {cellCount}
+           
           </div>
         );
       }
@@ -199,8 +207,8 @@ console.log(message);
    <Particles init={particlesInit} options={particlesOptions} />
 
       {/* // user-details */}
-      <h3 className="mt-5 ms-5 text-white"> <span class="board-wave">👋</span> Hello, Player {accessName}</h3>
-      <h5 className="mt-3 ms-5" style={{color:"yellow"}}> Player email- {userEmail} </h5>
+      <h3 className="mt-5 ms-5 "> <span class="board-wave">👋</span> Hello, Player {accessName}</h3>
+      <h5 className="mt-3 ms-5" style={{color:"grey"}}> Player email- {userEmail} </h5>
 
       <div className="row">
 
@@ -221,7 +229,7 @@ console.log(message);
           ref={diceRef}
           faceColor="radial-gradient(rgb(255, 60, 60), rgb(180, 0, 0))"
           dotColor="#fff"
-          dieSize={80}
+          dieSize={50}
           rollDone={handleDiceRoll}
         />
         {nextPlayer === userEmail && (
@@ -231,27 +239,15 @@ console.log(message);
         
         
         </div>
-        <div className="text-white ms-5 mt-5 "> <b>Sum : {diceValues} </b> </div>
+        <div className="ms-5 mt-5 "> <b>Sum : {diceValues} </b> </div>
         </div>
       <div className="col-3">
        
       {/* //players list */}
       <div className="index">
-      <main className="board-app">
   
-  <div className="board-heading">
-    <Random
-      text="PLAYER LIST"
-      effect="jump"
-      effectChange={4.0}
-      effectDuration={7.0}
-    />
-  </div>
-
-
-</main>
           {/* <h1 className="text-white">Player List</h1> */}
-          <h3 className="ms-4 text-white">PlayerID - PlayerName</h3>
+          <h4 className="ms-4">PlayerID - PlayerName</h4>
           {playerBoxes.length === 0 ? (
             <p>No players have joined yet.</p>
           ) : (
@@ -268,7 +264,7 @@ console.log(message);
         </div>
       
 
-      <h3 className="mt-5" style={{color:"yellow"}}> Next Player Turn={nextPlayer}</h3> 
+      <h4 className="mt-5" style={{color:"grey"}}> Next Player Turn={nextPlayer}</h4> 
       </div>
 
       </div>
