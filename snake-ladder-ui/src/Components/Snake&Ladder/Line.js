@@ -19,8 +19,8 @@ const Line = ({from, to}) => {
       console.log("toCoords", toCoords)
 
       const newLineStyle  = {
-        top:  fromCoords.y + 20,
-        left: fromCoords.x + 20,
+        top:  fromCoords.y,
+        left: fromCoords.x +20,
         width: Math.sqrt(
           Math.pow(toCoords.left - fromCoords.left, 2) + Math.pow(toCoords.top - fromCoords.top, 2)
         ),
@@ -32,8 +32,8 @@ const Line = ({from, to}) => {
       setLineStyle( newLineStyle);
       //console.log("lineRefAfter", lineRef)
     }, [from, to]);
-
-    if(from > to)
+    
+    if(parseInt(from) > parseInt(to))
       return <div className='line' id='snake' style={lineStyle}></div>
     else
       return <div className="line" id="ladder" style={lineStyle}></div>;
