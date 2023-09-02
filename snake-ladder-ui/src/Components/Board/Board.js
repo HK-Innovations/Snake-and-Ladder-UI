@@ -108,13 +108,14 @@ console.log(message);
     const diff=newPos-oldPos;
   console.log(diff);
     if(message.gameFinished === true){
+
+      window.location.replace(`${window.location.origin}/fire-works`);
       toast(
         `Player P${playerSeq} WON the game !! Wohoooo !!`,
         {
           autoClose: 9000, // Auto-close after 2 seconds
         }
       );
-      window.location.replace(`${window.location.origin}/fire-works`);
       
     }
     toast(
@@ -152,8 +153,9 @@ console.log(message);
           <div
             key={cellCount}
             id={cellCount}
-            className={`cell ${playerSeq ? "player" : ""}`}
+            className={`cell ${playerSeq ? "" : ""}`}
             style={{
+              height: "8vh",
               width: "10vh",
               display: "flex",
               justifyContent: "center",
