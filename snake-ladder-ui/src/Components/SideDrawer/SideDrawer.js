@@ -49,7 +49,7 @@ export default function SideDrawer() {
           <h3 className="mt-3"><FontAwesomeIcon icon={faChessBoard} />{"   "}Default Boards</h3>
           <h3 className="mt-3"><FontAwesomeIcon icon={faAward} />{"   "}Logout</h3>
         </div>
-        <img className="side-drawer-animation" src={Snake} alt='Snake'/>
+        <img className="mt-5 side-drawer-animation" src={Snake} alt='Snake'/>
       </div>
      
     </div>

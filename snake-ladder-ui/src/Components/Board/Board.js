@@ -117,13 +117,18 @@ console.log(message);
       window.location.replace(`${window.location.origin}/fire-works`);
       
     }
-    toast(
-      `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
-      {
-        autoClose: 5000, // Auto-close after 2 seconds
-      }
-    );
-
+    else{
+      toast(
+        `Player P${playerSeq} moved from ${oldPos} to ${newPos} with total sum of ${diff}`,
+        {
+          autoClose: 5000, // Auto-close after 2 seconds
+          position: "bottom-right",
+          
+        }
+      );
+  
+    }
+ 
   };
  
   
@@ -152,8 +157,9 @@ console.log(message);
           <div
             key={cellCount}
             id={cellCount}
-            className={`cell ${playerSeq ? "player" : ""}`}
+            className={`cell ${playerSeq ? "" : ""}`}
             style={{
+              height:"5vh",
               width: "10vh",
               display: "flex",
               justifyContent: "center",
@@ -166,16 +172,19 @@ console.log(message);
               <div
                 style={{
                   ...tokenStyle,
-                 
+                
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                
               >
+                
                 P{playerSeq}
               </div>
             )}
             {cellCount}
+           
           </div>
         );
       }
