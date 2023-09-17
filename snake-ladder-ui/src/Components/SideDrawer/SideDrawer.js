@@ -10,7 +10,7 @@ import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { faChessBoard } from "@fortawesome/free-solid-svg-icons";
 import "./SideDrawer.css";
 import Snake from "../../Assets/Template/snake404.png";
-// import Snake from "../../Assets/Template/snake.png";
+
 export default function SideDrawer() {
   return (
     <div>
@@ -42,12 +42,60 @@ export default function SideDrawer() {
           ></button>
         </div>
         <div className="mt-3 ms-3">
-          <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}Home</h3>
-          <h3 className="mt-3"><FontAwesomeIcon icon={faAddressCard} />{"   "}About</h3>
-          <h3 className="mt-3"><FontAwesomeIcon icon={faAward} />{"   "}Career</h3>
-          <h3 className="mt-3"><FontAwesomeIcon icon={faTrophy} />{"   "}Leader Board</h3>
-          <h3 className="mt-3"><FontAwesomeIcon icon={faChessBoard} />{"   "}Default Boards</h3>
-          <h3 className="mt-3"><FontAwesomeIcon icon={faAward} />{"   "}Logout</h3>
+        <div
+        className="mt-5"
+        onClick={() =>window.location.replace(`${window.location.origin}/template`)} // Navigate to "career" page
+        style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+      >
+        {/* Add your FontAwesomeIcon and content */}
+        <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}Home</h3>
+      </div> 
+
+      <div
+        className="mt-5"
+        onClick={() =>window.location.replace(`${window.location.origin}/about`)} // Navigate to "career" page
+        style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+      >
+        {/* Add your FontAwesomeIcon and content */}
+        <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}About</h3>
+      </div> 
+
+      <div
+        className="mt-5"
+        onClick={() =>window.location.replace(`${window.location.origin}/career`)} // Navigate to "career" page
+        style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+      >
+        {/* Add your FontAwesomeIcon and content */}
+        <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}Career</h3>
+      </div> 
+
+      <div
+        className="mt-5"
+        onClick={() =>window.location.replace(`${window.location.origin}/leader-board`)} // Navigate to "career" page
+        style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+      >
+        {/* Add your FontAwesomeIcon and content */}
+        <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}Leader Board</h3>
+      </div> 
+
+      <div
+        className="mt-5"
+        onClick={() =>window.location.replace(`${window.location.origin}/career`)} // Navigate to "career" page
+        style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+      >
+        {/* Add your FontAwesomeIcon and content */}
+        <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}Default Board</h3>
+      </div> 
+
+      <div
+        className="mt-5"
+        onClick={() =>window.location.replace(`${window.location.origin}/`)} // Navigate to "career" page
+        style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+      >
+        {/* Add your FontAwesomeIcon and content */}
+        <h3 className="mt-3"> <FontAwesomeIcon icon={faHome} />{"   "}Logout</h3>
+      </div> 
+
         </div>
         <img className="mt-5 side-drawer-animation" src={Snake} alt='Snake'/>
       </div>
@@ -55,3 +103,6 @@ export default function SideDrawer() {
     </div>
   );
 }
+
+
+
