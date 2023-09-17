@@ -7,14 +7,15 @@ import Template from "./Components/Template/Template";
 import Board from "./Components/Board/Board";
 import {
   BrowserRouter,
-  Link,
   Route,
   Routes,
 } from "react-router-dom";
 import JoinPage from "./Components/Join-page/JoinPage";
 import JoinGameId from "./Components/Join-gameID/JoinGameId.js";
-import FireWorks from "./Components/FireWorks/FireWorks.js";
-
+import FireWorks from "./Components/FireWorks/FireWorks";
+import Leaderboard from "./Components/LeaderBoard/LeaderBoard";
+import Career from "./Components/Career/Career";
+import About from "./Components/About/About";
 
 export default function App() {
   return (
@@ -29,6 +30,9 @@ export default function App() {
       <Route path="/join-gameId" element={<JoinGameId />} />
       <Route path="/board" element={<Board />} />
       <Route path="/fire-works" element={<FireWorks/>} />
+      <Route path="/leader-board" element={<Leaderboard/>} />
+      <Route path="/career" element={<Career/>} />
+      <Route path="/about" element={<About/>} />
     </Routes>
   </BrowserRouter>
   );
