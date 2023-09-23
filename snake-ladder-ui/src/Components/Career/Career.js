@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import baseURL from '../../config';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import baseURL from "../../config";
 
 const Career = () => {
-  const email = localStorage.getItem('email');
+  const email = localStorage.getItem("email");
   const emailId = email;
   const apiUrl = `${baseURL}/player/career`;
 
@@ -11,22 +11,20 @@ const Career = () => {
 
   useEffect(() => {
     axios({
-      method: 'post', // Change to POST request
+      method: "post",
       url: apiUrl,
-      data: { emailId }, // Send emailId in the request body
+      data: { emailId },
       headers: {
-        'Content-Type': 'application/json', // Set the content type as JSON
+        "Content-Type": "application/json",
       },
     })
-      .then(response => {
-        // Handle the response data here
+      .then((response) => {
         setCareerData(response.data);
       })
-      .catch(error => {
-        // Handle errors here
+      .catch((error) => {
         console.error(error);
       });
-  }, []); // Empty dependency array ensures the effect runs only once
+  }, []);
 
   return (
     <div className="container mt-5">
