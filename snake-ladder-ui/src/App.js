@@ -17,6 +17,7 @@ import Career from "./Components/Career/Career";
 import About from "./Components/About/About";
 import Default from "./Components/Default/Default";
 
+
 export default function App() {
   return (
     <BrowserRouter>
